@@ -1,20 +1,14 @@
 angular.module('starter.controllers', [])
-  .controller('AppCtrl', function ($scope, $timeout, $location,authenticateService) {
+  .controller('AppCtrl', function ($scope, $timeout, $location, $ionicPopover ,authenticateService) {
 
-    // With the new view caching in Ionic, Controllers are only called
-    // when they are recreated or on app start, instead of every page change.
-    // To listen for when this page is active (for example, to refresh data),
-    // listen for the $ionicView.enter event:
-    //$scope.$on('$ionicView.enter', function(e) {
-    //});
-    $scope.loginData = {
-      username: "",
-      password: ""
-    };
     $scope.$on('$ionicView.enter', function () {
       if(!authenticateService.onLoginCheck()) {
         $location.path('/login');
       }
+    });
+
+    $scope.$on('$ionicView.afterLeave', function () {
+      $scope.popover.hide();
     });
 
     $scope.logout = function () {
@@ -22,9 +16,33 @@ angular.module('starter.controllers', [])
       $location.path('/login');
     }
 
+    $ionicPopover.fromTemplateUrl('templates/popover-menu.html', {
+      scope: $scope
+    }).then(function(popover) {
+      $scope.popover = popover;
+    });
+
+    $scope.openPopover = function($event) {
+      $scope.popover.show($event);
+    };
+    $scope.closePopover = function() {
+      $scope.popover.hide();
+    };
+    //Cleanup the popover when we're done with it!
+    $scope.$on('$destroy', function() {
+      $scope.popover.remove();
+    });
+    // Execute action on hidden popover
+    $scope.$on('popover.hidden', function() {
+    });
+    // Execute action on remove popover
+    $scope.$on('popover.removed', function() {
+      // Execute action
+    });
   })
 
-  .controller('PlaylistsCtrl', function ($scope,$location,authenticateService) {
+  .controller('PlaylistsCtrl', function ($scope) {
+
     $scope.playlists = [
       {title: 'Reggae', id: 1},
       {title: 'Chill', id: 2},
@@ -37,13 +55,6 @@ angular.module('starter.controllers', [])
   })
 
   .controller('LoginCtrl', function ($scope, $location, authenticateService) {
-
-    // With the new view caching in Ionic, Controllers are only called
-    // when they are recreated or on app start, instead of every page change.
-    // To listen for when this page is active (for example, to refresh data),
-    // listen for the $ionicView.enter event:
-    //$scope.$on('$ionicView.enter', function(e) {
-    //});
 
     $scope.loginData = {
       username: "admin",
