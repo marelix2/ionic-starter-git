@@ -1,50 +1,64 @@
 angular.module('starter.controllers', [])
+  .controller('AppCtrl', function ($scope, $timeout, $location) {
 
-.controller('AppCtrl', function($scope, $ionicModal, $timeout) {
+    // With the new view caching in Ionic, Controllers are only called
+    // when they are recreated or on app start, instead of every page change.
+    // To listen for when this page is active (for example, to refresh data),
+    // listen for the $ionicView.enter event:
+    //$scope.$on('$ionicView.enter', function(e) {
+    //});
+    $scope.loginData = {
+      username: "",
+      password: ""
+    };
+    // $scope.$on('$ionicView.loaded', function () {
+    //   ;
+    //   if ($scope.loginData.username === "") {
+    //     console.log("nie zalogowano", $scope.loginData);
+    //     $location.path("/login");
+    //   }
+    // });
 
-  // With the new view caching in Ionic, Controllers are only called
-  // when they are recreated or on app start, instead of every page change.
-  // To listen for when this page is active (for example, to refresh data),
-  // listen for the $ionicView.enter event:
-  //$scope.$on('$ionicView.enter', function(e) {
-  //});
+  })
 
-  // Form data for the login modal
-  $scope.logindata = {};
+  .controller('PlaylistsCtrl', function ($scope) {
+    $scope.playlists = [
+      {title: 'Reggae', id: 1},
+      {title: 'Chill', id: 2},
+      {title: 'Dubstep', id: 3},
+      {title: 'Indie', id: 4},
+      {title: 'Rap', id: 5},
+      {title: 'Cowbell', id: 6}
+    ];
+  })
 
-  // Create the login modal that we will use later
-  $ionicModal.fromTemplateUrl('templates/login.html', {
-    scope: $scope
-  }).then(function(modal) {
-    $scope.modal = modal;
-  });
+  .controller('PlaylistCtrl', function ($scope, $stateParams) {
+  })
 
-  // Triggered in the login modal to close it
-  $scope.closeLogin = function() {
-    $scope.modal.hide();
-  };
+  .controller('LoginCtrl', function ($scope, $location, authenticateService) {
 
-  // Open the login modal
-  $scope.login = function() {
-    $scope.modal.show();
-  };
+    // With the new view caching in Ionic, Controllers are only called
+    // when they are recreated or on app start, instead of every page change.
+    // To listen for when this page is active (for example, to refresh data),
+    // listen for the $ionicView.enter event:
+    //$scope.$on('$ionicView.enter', function(e) {
+    //});
 
-  // Perform the login action when the user submits the login form
-  $scope.doLogin = function() {
-    console.log('Doing login', $scope.loginData);
-  };
-})
+    $scope.loginData = {
+      username: "admin",
+      password: "admin"
+    };
 
-.controller('PlaylistsCtrl', function($scope) {
-  $scope.playlists = [
-    { title: 'Reggae', id: 1 },
-    { title: 'Chill', id: 2 },
-    { title: 'Dubstep', id: 3 },
-    { title: 'Indie', id: 4 },
-    { title: 'Rap', id: 5 },
-    { title: 'Cowbell', id: 6 }
-  ];
-})
+    function doLogin() {
+      console.log('alelelel');
+      if (authenticateService.login($scope.loginData.username, $scope.loginData.password)) {
+        console.log('wchodze tu');
+        $location.path('/playlists');
+      }
+    }
 
-.controller('PlaylistCtrl', function($scope, $stateParams) {
-});
+
+  })
+
+
+
