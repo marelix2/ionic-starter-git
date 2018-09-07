@@ -8,6 +8,14 @@
         <button class="button button-icon button-clear ion-navicon" menu-toggle="left">
         </button>
       </ion-nav-buttons>
+      <ion-nav-buttons side="secondary">
+        <button class="button button-icon button-clear ion-more">
+        </button>
+      </ion-nav-buttons>
+      <ion-nav-buttons side="right">
+      <button class="button button-icon button-clear ion-power" ng-click="logout()">
+      </button>
+      </ion-nav-buttons>
     </ion-nav-bar>
     <ion-nav-view name="menuContent"></ion-nav-view>
   </ion-side-menu-content>
@@ -18,9 +26,6 @@
     </ion-header-bar>
     <ion-content>
       <ion-list>
-        <ion-item menu-close ng-click="logout()">
-          Logout
-        </ion-item>
         <ion-item menu-close href="#/app/search">
           Search
         </ion-item>
@@ -29,6 +34,9 @@
         </ion-item>
         <ion-item menu-close href="#/app/playlists">
           Playlists
+        </ion-item>
+        <ion-item menu-close ng-click="logout()">
+          Logout
         </ion-item>
       </ion-list>
     </ion-content>
