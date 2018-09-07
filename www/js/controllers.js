@@ -1,8 +1,8 @@
 angular.module('starter.controllers', [])
-  .controller('AppCtrl', function ($scope, $timeout, $location, $ionicPopover ,authenticateService) {
+  .controller('AppCtrl', function ($scope, $timeout, $location, $ionicPopover, authenticateService) {
 
     $scope.$on('$ionicView.enter', function () {
-      if(!authenticateService.onLoginCheck()) {
+      if (!authenticateService.onLoginCheck()) {
         $location.path('/login');
       }
     });
@@ -18,25 +18,25 @@ angular.module('starter.controllers', [])
 
     $ionicPopover.fromTemplateUrl('templates/popover-menu.html', {
       scope: $scope
-    }).then(function(popover) {
+    }).then(function (popover) {
       $scope.popover = popover;
     });
 
-    $scope.openPopover = function($event) {
+    $scope.openPopover = function ($event) {
       $scope.popover.show($event);
     };
-    $scope.closePopover = function() {
+    $scope.closePopover = function () {
       $scope.popover.hide();
     };
     //Cleanup the popover when we're done with it!
-    $scope.$on('$destroy', function() {
+    $scope.$on('$destroy', function () {
       $scope.popover.remove();
     });
     // Execute action on hidden popover
-    $scope.$on('popover.hidden', function() {
+    $scope.$on('popover.hidden', function () {
     });
     // Execute action on remove popover
-    $scope.$on('popover.removed', function() {
+    $scope.$on('popover.removed', function () {
       // Execute action
     });
   })
@@ -64,10 +64,18 @@ angular.module('starter.controllers', [])
     $scope.doLogin = function () {
       if (authenticateService.onLogin($scope.loginData.username, $scope.loginData.password)) {
         $location.path('/app/playlists');
-      }else {
+      } else {
         $location.path('/login');
       }
     }
+  })
+
+  .controller('SearchCtrl', function ($scope, CLIENT_ID, CLIENT_SECRET, REDIRECT_URI, spotifyService) {
+
+    console.log(spotifyService.getAccess(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI));
+   // spotifyService.getAccess();
+
+
   })
 
 
