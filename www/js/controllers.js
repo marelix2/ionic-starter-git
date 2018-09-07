@@ -1,5 +1,5 @@
 angular.module('starter.controllers', [])
-  .controller('AppCtrl', function ($scope, $timeout, $location) {
+  .controller('AppCtrl', function ($scope, $timeout, $location,authenticateService) {
 
     // With the new view caching in Ionic, Controllers are only called
     // when they are recreated or on app start, instead of every page change.
@@ -11,17 +11,20 @@ angular.module('starter.controllers', [])
       username: "",
       password: ""
     };
-    // $scope.$on('$ionicView.loaded', function () {
-    //   ;
-    //   if ($scope.loginData.username === "") {
-    //     console.log("nie zalogowano", $scope.loginData);
-    //     $location.path("/login");
-    //   }
-    // });
+    $scope.$on('$ionicView.enter', function () {
+      if(!authenticateService.onLoginCheck()) {
+        $location.path('/login');
+      }
+    });
+
+    $scope.logout = function () {
+      authenticateService.onLogout();
+      $location.path('/login');
+    }
 
   })
 
-  .controller('PlaylistsCtrl', function ($scope) {
+  .controller('PlaylistsCtrl', function ($scope,$location,authenticateService) {
     $scope.playlists = [
       {title: 'Reggae', id: 1},
       {title: 'Chill', id: 2},
@@ -30,9 +33,7 @@ angular.module('starter.controllers', [])
       {title: 'Rap', id: 5},
       {title: 'Cowbell', id: 6}
     ];
-  })
 
-  .controller('PlaylistCtrl', function ($scope, $stateParams) {
   })
 
   .controller('LoginCtrl', function ($scope, $location, authenticateService) {
@@ -49,15 +50,13 @@ angular.module('starter.controllers', [])
       password: "admin"
     };
 
-    function doLogin() {
-      console.log('alelelel');
-      if (authenticateService.login($scope.loginData.username, $scope.loginData.password)) {
-        console.log('wchodze tu');
-        $location.path('/playlists');
+    $scope.doLogin = function () {
+      if (authenticateService.onLogin($scope.loginData.username, $scope.loginData.password)) {
+        $location.path('/app/playlists');
+      }else {
+        $location.path('/login');
       }
     }
-
-
   })
 
 
