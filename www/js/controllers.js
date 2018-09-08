@@ -1,9 +1,11 @@
 angular.module('starter.controllers', [])
-  .controller('AppCtrl', function ($scope, $timeout, $location, $ionicPopover, authenticateService) {
+  .controller('AppCtrl', function ($scope, $timeout, $location, $window, $ionicPopover, authenticateService) {
+
+
 
     $scope.$on('$ionicView.enter', function () {
       if (!authenticateService.onLoginCheck()) {
-        $location.path('/login');
+        $location.path('/app/login');
       }
     });
 
@@ -13,7 +15,8 @@ angular.module('starter.controllers', [])
 
     $scope.logout = function () {
       authenticateService.onLogout();
-      $location.path('/login');
+      $window.localStorage.removeItem('token');
+      $location.path('/app/login');
     }
 
     $ionicPopover.fromTemplateUrl('templates/popover-menu.html', {
@@ -54,7 +57,7 @@ angular.module('starter.controllers', [])
 
   })
 
-  .controller('LoginCtrl', function ($scope, $location, authenticateService) {
+  .controller('LoginCtrl', function ($scope, $location, authenticateService, spotifyService,CLIENT_ID, CLIENT_SECRET, REDIRECT_URI) {
 
     $scope.loginData = {
       username: "admin",
@@ -63,20 +66,24 @@ angular.module('starter.controllers', [])
 
     $scope.doLogin = function () {
       if (authenticateService.onLogin($scope.loginData.username, $scope.loginData.password)) {
-        $location.path('/app/playlists');
+        spotifyService.getAccess(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI);
       } else {
-        $location.path('/login');
+        $location.path('/app/login');
       }
     }
   })
 
-  .controller('SearchCtrl', function ($scope, CLIENT_ID, CLIENT_SECRET, REDIRECT_URI, spotifyService) {
-
-    console.log(spotifyService.getAccess(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI));
-   // spotifyService.getAccess();
-
+  .controller('SearchCtrl', function ($scope ) {
 
   })
 
+  .controller('TokenCtrl', function ($scope ,$stateParams, $window ,$location) {
+
+
+    var token = $stateParams.access_token;
+    $window.localStorage.setItem('token',token.substr(13, token.indexOf('&') - 13));
+    $location.path('/app/playlists');
+
+  })
 
 

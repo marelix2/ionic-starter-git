@@ -44,20 +44,13 @@ angular.module('starter.services', [])
     return service;
   })
 
-  .factory('spotifyService', function ($http) {
+  .factory('spotifyService', function ($http, $window) {
     var service = {};
 
     service.getAccess = function (CLIENT_ID, CLIENT_SECRET, REDIRECT_URI) {
       var BASE_URL= 'https://accounts.spotify.com/authorize/?';
 
-      // $http.get( BASE_URL+'client_id='+CLIENT_ID+'&response_type=code&redirect_uri='+REDIRECT_URI+'&scope=user-read-private%20user-read-email&state=34fFs29kd09').success( function(response) {
-      //   return response;
-      // });
-      //
-      $http.post(  BASE_URL+'client_id='+CLIENT_ID+'&response_type=code&redirect_uri='+REDIRECT_URI+'&scope=user-read-private%20user-read-email&state=34fFs29kd09').success( function(response) {
-        console.log(response)
-        return response;
-      });
+     $window.location.assign( BASE_URL+'client_id='+CLIENT_ID+'&response_type=token&redirect_uri='+REDIRECT_URI+'&scope=user-read-private%20user-read-email&response_type=token&state=123');
 
     };
 
