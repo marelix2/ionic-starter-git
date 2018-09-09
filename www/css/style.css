@@ -16,7 +16,8 @@
   align-items: center;
 }
 
-.sp-card-footer{
+.sp-card-summary{
+  margin-top: 10px;
   display: flex;
   align-items: center;
 

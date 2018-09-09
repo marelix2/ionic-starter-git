@@ -10,3 +10,15 @@
 password in case of trouble with localhost port:
 
 ttcrudspotify@gmail.com : trudnehaslo12
+
+
+----------------------------------------------------------------------------------------------------------------------
+
+im not streaming palybacks in app because of : 
+
+streaming
+Description	Control playback of a Spotify track.
+ This scope is currently available to Spotify Playback SDKs, including the iOS SDK, Android SDK and Web Playback SDK.
+ The user must have a Spotify Premium account.
+ 
+----------------------------------------------------------------------------------------------------------------------
