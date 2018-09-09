@@ -1,13 +1,12 @@
-<ion-view view-title="playlists">
+<ion-view view-title="Playlists">
   <ion-content>
-
-
-      <div  class="list card" >
-          <div class="item item-icon-left" ng-repeat="playlist in playlists" >
-            <i class="icon ion-home"></i>
-            {{playlist.name}}
-          </div>
+    <ion-item>
+      <div ng-show="playlists" class="ng-hide list card">
+        <div class="item item-icon-left" ng-repeat="playlist in playlists">
+          <i class="icon ion-home"></i>
+          {{playlist.name}}
+        </div>
       </div>
-
+    </ion-item>
   </ion-content>
 </ion-view>
