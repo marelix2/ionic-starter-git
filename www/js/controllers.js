@@ -1,8 +1,5 @@
 angular.module('starter.controllers', [])
   .controller('AppCtrl', function ($scope, $timeout, $location, $window, $ionicPopover, authenticateService) {
-
-
-
     $scope.$on('$ionicView.enter', function () {
       if (!authenticateService.onLoginCheck()) {
         $location.path('/app/login');
@@ -44,20 +41,24 @@ angular.module('starter.controllers', [])
     });
   })
 
-  .controller('PlaylistsCtrl', function ($scope) {
+  .controller('TokenCtrl', function ($scope, $stateParams, $window, $location) {
 
-    $scope.playlists = [
-      {title: 'Reggae', id: 1},
-      {title: 'Chill', id: 2},
-      {title: 'Dubstep', id: 3},
-      {title: 'Indie', id: 4},
-      {title: 'Rap', id: 5},
-      {title: 'Cowbell', id: 6}
-    ];
+
+    var token = $stateParams.access_token;
+    $window.localStorage.setItem('token', token.substr(13, token.indexOf('&') - 13));
+    $location.path('/app/playlists');
 
   })
 
-  .controller('LoginCtrl', function ($scope, $location, authenticateService, spotifyService,CLIENT_ID, CLIENT_SECRET, REDIRECT_URI) {
+  .controller('CateogryCtrl', function ($scope, spotifyService) {
+
+    spotifyService.getCategories().then(function (value) {
+      console.log(value.data.categories.items);
+      $scope.categories = value.data.categories.items;
+    })
+  })
+
+  .controller('LoginCtrl', function ($scope, $location, authenticateService, spotifyService, CLIENT_ID, CLIENT_SECRET, REDIRECT_URI) {
 
     $scope.loginData = {
       username: "admin",
@@ -73,17 +74,19 @@ angular.module('starter.controllers', [])
     }
   })
 
-  .controller('SearchCtrl', function ($scope ) {
+  .controller('SearchCtrl', function ($scope) {
 
   })
 
-  .controller('TokenCtrl', function ($scope ,$stateParams, $window ,$location) {
 
+  .controller('PlaylistCtrl', function ($scope, spotifyService, $stateParams) {
 
-    var token = $stateParams.access_token;
-    $window.localStorage.setItem('token',token.substr(13, token.indexOf('&') - 13));
-    $location.path('/app/playlists');
-
+    $scope.$on('$ionicView.enter', function () {
+      spotifyService.getCategoryPlaylists($stateParams.category).then(function (value) {
+        console.log(value)
+          $scope.playlists = value.data.playlists.items;
+      });
+    });
   })
 
 

@@ -45,7 +45,9 @@ angular.module('starter.services', [])
   })
 
   .factory('spotifyService', function ($http, $window) {
-    var service = {};
+    var service = {
+      categories: []
+    };
 
     service.getAccess = function (CLIENT_ID, CLIENT_SECRET, REDIRECT_URI) {
       var BASE_URL= 'https://accounts.spotify.com/authorize/?';
@@ -53,6 +55,32 @@ angular.module('starter.services', [])
      $window.location.assign( BASE_URL+'client_id='+CLIENT_ID+'&response_type=token&redirect_uri='+REDIRECT_URI+'&scope=user-read-private%20user-read-email&response_type=token&state=123');
 
     };
+
+    service.getCategoryPlaylists = function (category) {
+      var BASE_URL= 'https://api.spotify.com/v1/browse/categories/';
+
+     return $http({
+        method: 'GET',
+        url: BASE_URL+ category + '/playlists',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization : 'Bearer ' + $window.localStorage.getItem('token')
+        }
+      })
+    }
+
+    service.getCategories = function () {
+      var BASE_URL= 'https://api.spotify.com/v1/browse/categories';
+
+     return $http({
+        method: 'GET',
+        url: BASE_URL,
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization : 'Bearer ' + $window.localStorage.getItem('token')
+        }
+      });
+    }
 
     return service;
   })

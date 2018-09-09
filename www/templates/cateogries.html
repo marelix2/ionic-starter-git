@@ -1,0 +1,12 @@
+<ion-view view-title="categories">
+  <ion-content>
+
+    <div  class="list card" >
+      <div  class="item item-avatar" ng-repeat="category in categories" href="#/app/playlists/{{category.id}}" >
+        <img src="{{category.icons[0].url}}">
+        <h2>{{category.name}}</h2>
+      </div>
+    </div>
+
+  </ion-content>
+</ion-view>
