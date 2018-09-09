@@ -1,0 +1,37 @@
+<ion-view view-title="Playlists">
+  <ion-content>
+    <ion-item>
+      <!--<div ng-show="playlist" class="ng-hide list card">-->
+      <!--<div class="item item-avatar" ng-repeat="track in playlist">-->
+      <!--{{track.name}}-->
+
+      <!--<a href="{{track.src}}"> Check in spotify </a>-->
+      <!--</div>-->
+      <!--</div>-->
+
+      <div ng-show="playlist" class="ng-hide list card">
+        <div class="item item-avatar" ng-repeat="track in playlist"
+             ng-click="track.showCardBody = showCardBody(track)">
+
+          <img src="{{track.images.url}}">
+
+          <h2>{{track.name}}</h2>
+
+          <div ng-show="track.showCardBody" class="ng-hide item item-body">
+            <div class="card-img">
+              <img src="{{track.images.url}}">
+            </div>
+            <h2>
+               title: {{track.name}}
+            </h2>
+            <p>
+            <a href="" class="subdued">artists: {{track.artist}}</a>
+            </p>
+            <p>
+            <a class="button button-large button-balanced" href="{{track.src}}"> Check in spotify </a>
+            </p>
+          </div>
+        </div>
+    </ion-item>
+  </ion-content>
+</ion-view>
