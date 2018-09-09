@@ -1,13 +1,13 @@
 <ion-view view-title="Search">
   <ion-content>
     <label class="item item-input item-floating-label">
-      <span class="input-label">Search categories</span>
-      <input type="text" placeholder="Search categories" ng-model='category.name'>
+      <label class="input-label">Search categories</label>
+      <input type="text" placeholder="Search in categories" ng-model='category.name'>
     </label>
 
-    <ion-item ng-repeat="category in categories | filter:category:strict" href="#/app/playlists/{{category.id}}">
-      {{category.name}}
+    <ion-item ng-repeat="category in categories | filter:category:strict"
+              href="#/app/playlists/{{category.id}}" title="go to choosen category: {{category.name}}">
+      <h2>{{category.name}}</h2>
     </ion-item>
-
   </ion-content>
 </ion-view>
