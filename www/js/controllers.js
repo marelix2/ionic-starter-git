@@ -95,17 +95,21 @@ angular.module('starter.controllers', [])
             showCardBody: false
           }
         });
-
       });
-
       $scope.showCardBody = function (playlist) {
         return !playlist.showCardBody;
       }
     })
-
   })
 
-  .controller('TracksCtrl', function ($scope, spotifyService, $stateParams, $sce) {
+  .controller('TracksCtrl', function ($scope, spotifyService, $stateParams, $window) {
+    $scope.leavePage = function (path) {
+      var answer = confirm("Are you sure you want to leave this page?");
+      if (answer) {
+        $window.location.href = path;
+      }
+
+    }
 
     $scope.playlistName = $stateParams;
     var playlistId = $stateParams.tracks;
@@ -132,10 +136,10 @@ angular.module('starter.controllers', [])
     })
   })
 
-.controller('SearchCtrl', function ($scope, spotifyService) {
-  spotifyService.getCategories().then(function (value) {
-    $scope.categories = value.data.categories.items;
-  });
-})
+  .controller('SearchCtrl', function ($scope, spotifyService) {
+    spotifyService.getCategories().then(function (value) {
+      $scope.categories = value.data.categories.items;
+    });
+  })
 
 

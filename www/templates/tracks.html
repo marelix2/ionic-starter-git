@@ -1,6 +1,10 @@
 <ion-view view-title="Tracks">
   <ion-content>
     <ion-item>
+      <div  ng-show="!playlist" class="ng-hide col col-33 col-offset-50">
+        <ion-spinner icon="dots"></ion-spinner>
+      </div>
+
       <table ng-show="playlist" class="ng-hide list card">
         <div class="item item-avatar" ng-repeat="track in playlist"
              ng-click="track.showCardBody = showCardBody(track)">
@@ -16,7 +20,7 @@
             <h2> title: {{track.name}}</h2>
             <a href="" class="subdued" title=" names of track creators ">artists: {{track.artist}}</a>
             <p>
-              <a class="button button-large button-balanced" href="{{track.src}}"
+              <a class="button button-large button-balanced" ng-click="leavePage(track.src)"
                  title="go to open.spotify.com to check this tracks "> Check on spotify </a>
             </p>
           </section>

@@ -1,6 +1,10 @@
 <ion-view view-title="Playlists">
   <ion-content>
     <ion-item>
+      <div  ng-show="!playlists" class="ng-hide col col-33 col-offset-50">
+        <ion-spinner icon="dots"></ion-spinner>
+      </div>
+
       <table ng-show="playlists" class="ng-hide list card">
         <div class="item item-avatar" ng-repeat="playlist in playlists"
              ng-click="playlist.showCardBody = showCardBody(playlist)">
