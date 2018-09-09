@@ -1,5 +1,5 @@
 angular.module('starter.controllers', [])
-  .controller('AppCtrl', function ($scope, $timeout, $location, $window, $ionicPopover, authenticateService) {
+  .controller('AppCtrl', function ($scope, $timeout, $location, $window, $ionicHistory, $ionicPopover, authenticateService) {
     $scope.$on('$ionicView.enter', function () {
       if (!authenticateService.onLoginCheck()) {
         $location.path('/app/login');
@@ -12,6 +12,7 @@ angular.module('starter.controllers', [])
 
     $scope.logout = function () {
       authenticateService.onLogout();
+      $ionicHistory.clearCache();
       $window.localStorage.removeItem('token');
       $location.path('/app/login');
     }
@@ -74,7 +75,7 @@ angular.module('starter.controllers', [])
     }
   })
 
-  .controller('PlaylistCtrl', function ($scope,  $rootScope,spotifyService, $stateParams) {
+  .controller('PlaylistCtrl', function ($scope, $rootScope, spotifyService, $stateParams) {
 
     $scope.category = $stateParams.category;
 
@@ -91,53 +92,50 @@ angular.module('starter.controllers', [])
           }
         });
 
-      }, function (reason) {
-
       });
-    });
 
-    $scope.showCardBody = function (playlist) {
-      return !playlist.showCardBody;
-    }
+      $scope.showCardBody = function (playlist) {
+        return !playlist.showCardBody;
+      }
+    })
+
   })
 
-  .controller('TracksCtrl', function ($scope, spotifyService, $stateParams,$sce) {
+  .controller('TracksCtrl', function ($scope, spotifyService, $stateParams, $sce) {
 
     $scope.playlistName = $stateParams;
     var playlistId = $stateParams.tracks;
 
     $scope.showCardBody = function (playlist) {
       return !playlist.showCardBody;
-    }
+    };
 
-     $scope.$on('$ionicView.enter', function () {
+    $scope.$on('$ionicView.enter', function () {
       spotifyService.getPlaylistTracks(playlistId).then(function (value) {
-
         $scope.playlist = value.data.items.map(function (item) {
           return {
             id: item.track.id,
             name: item.track.name,
-            artist: item.track.artists.map( function (artist) { return artist.name}).join(", "),
+            artist: item.track.artists.map(function (artist) {
+              return artist.name
+            }).join(", "),
             images: item.track.album.images[1],
             src: item.track.external_urls.spotify,
             showCardBody: false
           }
-        });
-        console.log($scope.playlist);
+        })
       });
-
-
-    });
-
+    })
   })
 
-  .controller('SearchCtrl', function ($scope,spotifyService) {
+.controller('SearchCtrl', function ($scope, spotifyService) {
 
-    $scope.category = '';
+  $scope.category = '';
 
-    spotifyService.getCategories().then(function (value) {
-      console.log(value.data.categories.items);
-      $scope.categories = value.data.categories.items;
-    });
+  spotifyService.getCategories().then(function (value) {
+    $scope.categories = value.data.categories.items;
+  });
 
-  })
+})
+
+

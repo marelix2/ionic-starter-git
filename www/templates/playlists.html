@@ -1,7 +1,7 @@
 <ion-view view-title="Playlists">
   <ion-content>
     <ion-item>
-      <div ng-show="playlists" class="ng-hide list card">
+      <table ng-show="playlists" class="ng-hide list card">
         <div class="item item-avatar" ng-repeat="playlist in playlists"
              ng-click="playlist.showCardBody = showCardBody(playlist)">
           <img src="{{playlist.images[0].url}}">
@@ -20,7 +20,7 @@
             <a class="button icon-right ion-chevron-right button-clear button-dark" href="#/app/playlists/{{category}}/{{playlist.id}}">Check tracks</a>
           </div>
         </div>
-      </div>
+      </table>
     </ion-item>
   </ion-content>
 </ion-view>
