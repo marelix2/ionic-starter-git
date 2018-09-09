@@ -91,7 +91,7 @@ angular.module('starter.controllers', [])
             name: item.name,
             images: item.images,
             tracks: item.tracks.total,
-            owner: item.owner.display_name || Spotify,
+            owner: item.owner.display_name || 'Spotify',
             showCardBody: false
           }
         });
