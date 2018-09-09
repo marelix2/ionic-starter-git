@@ -108,7 +108,6 @@ angular.module('starter.services', [])
       })
     }
 
-
     return service;
   })
 

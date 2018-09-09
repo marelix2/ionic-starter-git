@@ -74,11 +74,7 @@ angular.module('starter.controllers', [])
     }
   })
 
-  .controller('SearchCtrl', function ($scope) {
-
-  })
-
-  .controller('PlaylistCtrl', function ($scope, spotifyService, $stateParams) {
+  .controller('PlaylistCtrl', function ($scope,  $rootScope,spotifyService, $stateParams) {
 
     $scope.category = $stateParams.category;
 
@@ -94,6 +90,8 @@ angular.module('starter.controllers', [])
             showCardBody: false
           }
         });
+
+      }, function (reason) {
 
       });
     });
@@ -133,4 +131,13 @@ angular.module('starter.controllers', [])
 
   })
 
+  .controller('SearchCtrl', function ($scope,spotifyService) {
 
+    $scope.category = '';
+
+    spotifyService.getCategories().then(function (value) {
+      console.log(value.data.categories.items);
+      $scope.categories = value.data.categories.items;
+    });
+
+  })
