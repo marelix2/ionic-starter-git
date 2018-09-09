@@ -104,6 +104,8 @@ angular.module('starter.controllers', [])
   })
 
   .controller('TracksCtrl', function ($scope, spotifyService, $stateParams,$sce) {
+
+    $scope.playlistName = $stateParams;
     var playlistId = $stateParams.tracks;
 
     $scope.showCardBody = function (playlist) {
