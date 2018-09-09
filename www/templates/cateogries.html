@@ -1,12 +1,13 @@
 <ion-view view-title="Categories">
   <ion-content>
     <ion-item>
-    <table ng-show="categories" class="ng-hide list card">
-      <a class="item item-avatar" ng-repeat="category in categories" href="#/app/playlists/{{category.id}}">
-        <img src="{{category.icons[0].url}}" alt="icon of category: {{category.name}}">
-        <h2>{{category.name}}</h2>
-      </a>
-    </table>
+      <table ng-show="categories" class="ng-hide list card">
+        <a class="item item-avatar" ng-repeat="category in categories" href="#/app/playlists/{{category.id}}"
+           title="go to category {{category.name}} to check content">
+          <img src="{{category.icons[0].url}}" alt="icon of category: {{category.name}}">
+          <h2>{{category.name}}</h2>
+        </a>
+      </table>
     </ion-item>
   </ion-content>
 </ion-view>

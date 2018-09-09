@@ -4,21 +4,24 @@
       <table ng-show="playlists" class="ng-hide list card">
         <div class="item item-avatar" ng-repeat="playlist in playlists"
              ng-click="playlist.showCardBody = showCardBody(playlist)">
-          <img src="{{playlist.images[0].url}}">
+          <img src="{{playlist.images[0].url}}" alt=" avatar of playlist: {{playlist.name}}">
 
           <h2>{{playlist.name}}</h2>
+          <p>check details</p>
 
-          <div ng-show="playlist.showCardBody" class="ng-hide item item-body">
+          <section ng-show="playlist.showCardBody" class="ng-hide item item-body">
             <div class="card-img">
-            <img src="{{playlist.images[0].url}}">
+            <img src="{{playlist.images[0].url}}" alt="image of playlist: {{playlist.name}}, inside the card">
             </div>
-            <p class="sp-card-footer">
-              <a href="" class="subdued">total tracks: {{playlist.tracks}}</a>
-              <a href="" class="subdued">owner: {{playlist.owner}}</a>
-            </p>
+            <summary class="sp-card-summary">
+              <a href="" class="subdued" title=" total tracks ">total tracks: {{playlist.tracks}}</a>
+              <a href="" class="subdued" title=" owner of playlist">owner: {{playlist.owner}}</a>
+            </summary>
 
-            <a class="button icon-right ion-chevron-right button-clear button-dark" href="#/app/playlists/{{category}}/{{playlist.id}}">Check tracks</a>
-          </div>
+            <a class="button icon-right ion-chevron-right button-clear button-dark"
+               href="#/app/playlists/{{category}}/{{playlist.id}}"
+               title="Go to check playlist tracks">Check tracks</a>
+          </section>
         </div>
       </table>
     </ion-item>

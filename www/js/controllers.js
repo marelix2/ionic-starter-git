@@ -1,8 +1,14 @@
 angular.module('starter.controllers', [])
   .controller('AppCtrl', function ($scope, $timeout, $location, $window, $ionicHistory, $ionicPopover, authenticateService) {
-    $scope.$on('$ionicView.enter', function () {
+    $scope.isLoggedIn = false;
+
+    $scope.$on('$ionicView.beforeEnter', function () {
       if (!authenticateService.onLoginCheck()) {
         $location.path('/app/login');
+        $scope.isLoggedIn = false;
+      }
+      else {
+        $scope.isLoggedIn = true;
       }
     });
 
@@ -12,7 +18,6 @@ angular.module('starter.controllers', [])
 
     $scope.logout = function () {
       authenticateService.onLogout();
-      $ionicHistory.clearCache();
       $window.localStorage.removeItem('token');
       $location.path('/app/login');
     }
@@ -54,7 +59,6 @@ angular.module('starter.controllers', [])
   .controller('CateogryCtrl', function ($scope, spotifyService) {
 
     spotifyService.getCategories().then(function (value) {
-      console.log(value.data.categories.items);
       $scope.categories = value.data.categories.items;
     })
   })
@@ -87,7 +91,7 @@ angular.module('starter.controllers', [])
             name: item.name,
             images: item.images,
             tracks: item.tracks.total,
-            owner: item.owner.display_name,
+            owner: item.owner.display_name || Spotify,
             showCardBody: false
           }
         });
@@ -129,13 +133,9 @@ angular.module('starter.controllers', [])
   })
 
 .controller('SearchCtrl', function ($scope, spotifyService) {
-
-  $scope.category = '';
-
   spotifyService.getCategories().then(function (value) {
     $scope.categories = value.data.categories.items;
   });
-
 })
 
 
