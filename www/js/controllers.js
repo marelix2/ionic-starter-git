@@ -78,15 +78,57 @@ angular.module('starter.controllers', [])
 
   })
 
-
   .controller('PlaylistCtrl', function ($scope, spotifyService, $stateParams) {
 
+    $scope.category = $stateParams.category;
+
     $scope.$on('$ionicView.enter', function () {
-      spotifyService.getCategoryPlaylists($stateParams.category).then(function (value) {
-        console.log(value)
-          $scope.playlists = value.data.playlists.items;
+      spotifyService.getCategoryPlaylists($scope.category).then(function (value) {
+        $scope.playlists = value.data.playlists.items.map(function (item) {
+          return {
+            id: item.id,
+            name: item.name,
+            images: item.images,
+            tracks: item.tracks.total,
+            owner: item.owner.display_name,
+            showCardBody: false
+          }
+        });
+
       });
     });
+
+    $scope.showCardBody = function (playlist) {
+      return !playlist.showCardBody;
+    }
+  })
+
+  .controller('TracksCtrl', function ($scope, spotifyService, $stateParams,$sce) {
+    var playlistId = $stateParams.tracks;
+
+    $scope.showCardBody = function (playlist) {
+      return !playlist.showCardBody;
+    }
+
+     $scope.$on('$ionicView.enter', function () {
+      spotifyService.getPlaylistTracks(playlistId).then(function (value) {
+
+        $scope.playlist = value.data.items.map(function (item) {
+          return {
+            id: item.track.id,
+            name: item.track.name,
+            artist: item.track.artists.map( function (artist) { return artist.name}).join(", "),
+            images: item.track.album.images[1],
+            src: item.track.external_urls.spotify,
+            showCardBody: false
+          }
+        });
+        console.log($scope.playlist);
+      });
+
+
+    });
+
   })
 
 
