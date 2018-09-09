@@ -1,13 +1,17 @@
 <ion-view view-title="Playlists">
   <ion-content>
     <ion-item>
+      <div  ng-show="!playlists" class="ng-hide col col-33 col-offset-50">
+        <ion-spinner icon="dots"></ion-spinner>
+      </div>
+
       <table ng-show="playlists" class="ng-hide list card">
         <div class="item item-avatar" ng-repeat="playlist in playlists"
              ng-click="playlist.showCardBody = showCardBody(playlist)">
           <img src="{{playlist.images[0].url}}" alt=" avatar of playlist: {{playlist.name}}">
 
           <h2>{{playlist.name}}</h2>
-          <p>check details</p>
+          <p ng-show="!playlist.showCardBody">show details</p>
 
           <section ng-show="playlist.showCardBody" class="ng-hide item item-body">
             <div class="card-img">

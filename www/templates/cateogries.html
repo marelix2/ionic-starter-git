@@ -1,6 +1,9 @@
 <ion-view view-title="Categories">
   <ion-content>
     <ion-item>
+      <div  ng-show="!categories" class="ng-hide col col-33 col-offset-50">
+        <ion-spinner icon="dots"></ion-spinner>
+      </div>
       <table ng-show="categories" class="ng-hide list card">
         <a class="item item-avatar" ng-repeat="category in categories" href="#/app/playlists/{{category.id}}"
            title="go to category {{category.name}} to check content">
