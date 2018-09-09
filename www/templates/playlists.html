@@ -11,7 +11,7 @@
           <img src="{{playlist.images[0].url}}" alt=" avatar of playlist: {{playlist.name}}">
 
           <h2>{{playlist.name}}</h2>
-          <p>check details</p>
+          <p ng-show="!playlist.showCardBody">show details</p>
 
           <section ng-show="playlist.showCardBody" class="ng-hide item item-body">
             <div class="card-img">

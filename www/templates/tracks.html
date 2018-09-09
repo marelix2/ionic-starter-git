@@ -11,7 +11,8 @@
 
           <img src="{{track.images.url}}" alt=" avatar of track: {{track.name}}">
           <h2>{{track.name}}</h2>
-          <p>check details</p>
+
+          <p ng-show="!track.showCardBody">show details</p>
 
           <section ng-show="track.showCardBody" class="ng-hide item item-body">
             <div class="card-img">
